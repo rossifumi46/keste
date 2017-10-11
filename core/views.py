@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView
@@ -7,7 +8,7 @@ from rest_framework.decorators import api_view
 
 from core.serializers import *
 from core.models import *
-
+from core import utils
 
 class Block(APIView):
     def get_table(self, pk):
@@ -85,3 +86,7 @@ def search(request):
         'tutor': tutor.data
     }
     return Response(data)
+
+def free(request):
+    rooms = utils.free()
+    return render(request, 'free.html',  {'rooms': rooms})

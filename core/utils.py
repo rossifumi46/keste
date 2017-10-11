@@ -28,7 +28,7 @@ def check_demand(rooms, start, end):
     return schedules
 
 
-def free(t):
+def free():
     time = datetime.now()
     bundles = Bundle.objects.filter(table__day=time.weekday() + 1, table__start__lte=time, table__end__gte=time)
     rooms = Room.objects.all()
