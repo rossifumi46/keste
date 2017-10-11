@@ -15,7 +15,7 @@ import datetime
 if __name__ == "__main__":
     url = "http://schedule.iitu.kz/rest/user/get_timetable_block.php"
 
-    for i in range(14131, 14132):
+    for i in range(13000, 15000):
         if i == 13940:
             continue
         querystring = {"block_id": str(i)}
