@@ -25,7 +25,7 @@ SECRET_KEY = '81+i6^cfl^bp056t1&i&z(%g*ci!9%ge5t0_tx%=ftiaq1j&1!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysterious-thicket-12979.herokuapp.com']
 
 
 # Application definition
