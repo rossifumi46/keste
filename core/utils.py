@@ -29,11 +29,11 @@ def check_demand(rooms, start, end):
 
 
 def free():
-    time = datetime.now()
-    bundles = Bundle.objects.filter(table__day=time.weekday() + 1, table__start__lte=time, table__end__gte=time)
-    if bundles.count() == Bundle.objects.all().count():
-        time = time + timedelta(minutes=10)
-    bundles = Bundle.objects.filter(table__day=time.weekday() + 1, table__start__lte=time.time(), table__end__gte=time.time())
+    t = datetime.now()
+    bundles = Bundle.objects.filter(table__day=t.weekday() + 1, table__start__lte=t, table__end__gte=t)
+    if bundles.count() == 0:
+        t = t + timedelta(minutes=20)
+        bundles = Bundle.objects.filter(table__day=t.weekday() + 1, table__start__lte=t, table__end__gte=t)
     rooms = Room.objects.all()
     rooms = rooms.exclude(bundle__in=bundles)
     return rooms

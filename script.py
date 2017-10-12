@@ -13,12 +13,11 @@ from core.models import *
 import datetime
 
 if __name__ == "__main__":
-    url = "http://schedule.iitu.kz/rest/user/get_timetable_block.php"
+    url = "http://schedule.iitu.kz/rest/user/get_timetable_room.php"
 
-    for i in range(13000, 15000):
-        if i == 13940:
-            continue
-        querystring = {"block_id": str(i)}
+    for i in range(147,255):
+
+        querystring = {"bundle_id": str(i)}
 
         response = requests.request("GET", url, params=querystring)
 
