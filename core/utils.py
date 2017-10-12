@@ -36,4 +36,9 @@ def free():
         bundles = Bundle.objects.filter(table__day=t.weekday() + 1, table__start__lte=t, table__end__gte=t)
     rooms = Room.objects.all()
     rooms = rooms.exclude(bundle__in=bundles)
-    return rooms
+    res = []
+    for item in rooms:
+        if len(item.number) == 3:
+            res.append(item.number)
+    res.sort()
+    return res

@@ -23,5 +23,12 @@ if __name__ == "__main__":
     rooms = rooms.exclude(bundle__in=bundles)
     # pp = pprint.PrettyPrinter(indent=4)
     # pp.pprint(res)
+    # for item in rooms:
+    #     print(item)
+    res = []
     for item in rooms:
+        if len(item.number) == 3:
+            res.append(item.number)
+    res.sort()
+    for item in res:
         print(item)
