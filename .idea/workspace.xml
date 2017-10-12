@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="96682e10-5ff7-475d-afe8-584f7b981db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/utils.py" afterPath="$PROJECT_DIR$/core/utils.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script.py" afterPath="$PROJECT_DIR$/script.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,17 +89,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="script.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="script.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="98" column="17" lean-forward="true" selection-start-line="37" selection-start-column="8" selection-end-line="98" selection-end-column="17" />
+            <state relative-caret-position="217">
+              <caret line="77" column="23" lean-forward="false" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/utils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="390">
@@ -227,6 +226,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>print</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -252,8 +256,8 @@
         <option value="$PROJECT_DIR$/core/views.py" />
         <option value="$PROJECT_DIR$/core/templates/free.html" />
         <option value="$PROJECT_DIR$/schedule/settings.py" />
-        <option value="$PROJECT_DIR$/script.py" />
         <option value="$PROJECT_DIR$/core/utils.py" />
+        <option value="$PROJECT_DIR$/script.py" />
       </list>
     </option>
   </component>
@@ -1044,14 +1048,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="98" column="17" lean-forward="true" selection-start-line="37" selection-start-column="8" selection-end-line="98" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1059,6 +1055,14 @@
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="77" column="23" lean-forward="false" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -60,14 +60,14 @@ if __name__ == "__main__":
                         bundle[0].room.add(room[0])
 
         for key, value in b.items():
-            print(key)
+            # print(key)
             for key1, value in value.items():
                 c = value[0]  # slovar table
 
                 id = c['subject_id']
                 # print(a['subjects'][id]['subject_en'])
                 subject = Subject.objects.get(name=a['subjects'][id]['subject_en'])
-                print(subject)
+                # print(subject)
 
                 time = c["time_id"]
                 start = a['times'][time]['start_time']
