@@ -3,7 +3,7 @@ from .models import *
 from datetime import time
 
 from django.db.models import Q
-from datetime import datetime
+from datetime import datetime, timedelta
 import pprint
 
 def check_demand(rooms, start, end):
@@ -31,6 +31,9 @@ def check_demand(rooms, start, end):
 def free():
     time = datetime.now()
     bundles = Bundle.objects.filter(table__day=time.weekday() + 1, table__start__lte=time, table__end__gte=time)
+    if bundles.count() == Bundle.objects.all().count():
+        time = time + timedelta(minutes=10)
+    bundles = Bundle.objects.filter(table__day=time.weekday() + 1, table__start__lte=time.time(), table__end__gte=time.time())
     rooms = Room.objects.all()
     rooms = rooms.exclude(bundle__in=bundles)
     return rooms
