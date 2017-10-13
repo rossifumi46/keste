@@ -15,12 +15,12 @@ import datetime
 if __name__ == "__main__":
     url = "http://schedule.iitu.kz/rest/user/get_timetable_room.php"
 
-    for i in range(147,255):
+    for i in range(500):
 
         querystring = {"bundle_id": str(i)}
 
         response = requests.request("GET", url, params=querystring)
-
+        print(response.status_code)
         a = response.text
 
         a = json.loads(a)

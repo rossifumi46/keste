@@ -106,5 +106,5 @@ def find(request):
             end = form.cleaned_data['end']
             day = form.cleaned_data['day']
             rooms = utils.check(day, start, end)
-            form = FindForm(day=day, start=start, end=end)
+            form = FindForm(request.POST)
             return render(request, 'find.html', {'form': form, 'rooms': rooms})
