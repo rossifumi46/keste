@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form role="form" action="{% url 'find' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit"/>
+    </form>
+{% if rooms %}
+{% for room in rooms %}
+
+    {{ room }}
+    <br>
+
+{% endfor %}
+{% endif %}
+</body>
+</html>

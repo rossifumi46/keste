@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from core.serializers import *
 from core.models import *
 from core import utils
+from core.forms import FindForm
 
 class Block(APIView):
     def get_table(self, pk):
@@ -87,6 +88,23 @@ def search(request):
     }
     return Response(data)
 
+
 def free(request):
     rooms = utils.free()
     return render(request, 'free.html',  {'rooms': rooms})
+
+
+def find(request):
+    if request.method == 'GET':
+        form = FindForm()
+        rooms = None
+        return render(request, 'find.html', {'form': form, 'rooms': rooms})
+    if request.method == 'POST':
+        form = FindForm(request.POST)
+        if form.is_valid():
+            start = form.cleaned_data['start']
+            end = form.cleaned_data['end']
+            day = form.cleaned_data['day']
+            rooms = utils.check(day, start, end)
+            form = FindForm()
+            return render(request, 'find.html', {'form': form, 'rooms': rooms})

@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'room/^(?P<pk>[0-9]+)/$', views.Room.as_view(), name='index'),
     url(r'^search/$', views.search),
     url(r'free/$', views.free, name='free'),
+    url(r'find/$', views.find, name='find'),
 ]

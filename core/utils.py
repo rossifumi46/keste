@@ -4,28 +4,26 @@ from datetime import time
 
 from django.db.models import Q
 from datetime import datetime, timedelta
-import pprint
 
-def check_demand(rooms, start, end):
+
+
+def check(day, start, end):
     """
     Search rooms which are free between start and end.
     """
     result = []
-    if rooms is None:
-        return result
 
-    end = time(end.hour, end.minute - 1)
+    rooms = Room.objects.all()
 
-    schedules = Table.objects.filter(Q(start__gte=start, start__lt=end) |
-                                        Q(end__gt=start, end__lte=end))
-    print(schedules)
-    rooms = rooms.exclude(schedule__in=schedules)
-    for room in rooms:
-        temp = {
-            'room': room.number
-        }
-        result.append(temp)
-    return schedules
+    bundles = Bundle.objects.filter(Q(table__start__gte=start, table__start__lt=end) |
+                                    Q(table__end__gt=start, table__end__lte=end), \
+                                    Q(table__day=day))
+    rooms = rooms.exclude(bundle__in=bundles)
+    for item in rooms:
+        if len(item.number) == 3:
+            result.append(item.number)
+    result.sort()
+    return result
 
 
 def free():

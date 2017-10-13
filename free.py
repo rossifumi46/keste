@@ -10,25 +10,10 @@ import requests
 import json
 import pprint
 from core.models import *
-import datetime
+from datetime import datetime, time
 from core import utils
 
 if __name__ == "__main__":
-    time = datetime.datetime.now()
-    bundles = Bundle.objects.filter(table__day=time.weekday()+1, table__start__lte=time, table__end__gte=time)
-    # tables = Table.objects.filter(start__lte=time.time(), end__gte=time.time(), day=time.weekday() + 1)
-    # for table in tables:
-    #     print(table)
-    rooms = Room.objects.all()
-    rooms = rooms.exclude(bundle__in=bundles)
-    # pp = pprint.PrettyPrinter(indent=4)
-    # pp.pprint(res)
-    # for item in rooms:
-    #     print(item)
-    res = []
-    for item in rooms:
-        if len(item.number) == 3:
-            res.append(item.number)
-    res.sort()
-    for item in res:
-        print(item)
+    rooms  = utils.check(1, time(9), time(9, 50))
+    for room in rooms:
+        print(room)
