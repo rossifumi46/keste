@@ -15,7 +15,7 @@ import datetime
 if __name__ == "__main__":
     url = "http://schedule.iitu.kz/rest/user/get_timetable_room.php"
 
-    for i in range(500):
+    for i in range(193, 194):
 
         querystring = {"bundle_id": str(i)}
 
