@@ -16,7 +16,8 @@ def check(day, start, end):
     rooms = Room.objects.all()
 
     bundles = Bundle.objects.filter(Q(table__start__gte=start, table__start__lt=end) |
-                                    Q(table__end__gt=start, table__end__lte=end), \
+                                    Q(table__end__gt=start, table__end__lte=end) |
+                                    Q(table__start__lt=start, table__end__gt=end),
                                     Q(table__day=day))
     rooms = rooms.exclude(bundle__in=bundles)
     for item in rooms:
