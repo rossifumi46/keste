@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Usage</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+    <link rel='stylesheet prefetch'
+          href='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.css'>
+    <link rel='stylesheet prefetch' href='https://material.angularjs.org/1.1.5/docs.css'>
+
+{#    <link rel="stylesheet" href="css/style.css">#}
+
+</head>
+
+<body>
+{% verbatim %}
+
+<div ng-controller="DemoCtrl as ctrl" ng-cloak="" class="autocompletedemoBasicUsage" ng-app="MyApp">
+    <md-content class="md-padding">
+        <form ng-submit="submit()">
+            <md-autocomplete
+                    md-selected-item="ctrl.choice.a"
+                    md-search-text="searchText"
+                    md-items="item in ctrl.querySearch(searchText)"
+                    md-item-text="item.name">
+                <md-item-template>
+                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.name }}</span>
+                    {{ item.now }}
+                    <span ng-style="{'color: green': item.now === 'Error', 'color: yellow': item.now === false"
+                          md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.info[0]}}</span>
+                </md-item-template>
+        </form>
+    </md-content>
+    <div style="width: 250px; float: left;" ng-repeat="(key, value) in ctrl.model.items">
+        {{ ctrl.model.days[(key|num)-1]}}
+        <div style="" ng-repeat="(k, val) in value">
+            <div layout="row">
+                <br>
+                {{ key=='1' ? ctrl.model.times[k]["start_time"]: ""}}
+                <br>
+                {{ key=='1' ? ctrl.model.times[k]["end_time"]: ""}}
+                <!-- <div style="float: left;"> -->
+                <md-card md-theme="
+                        {{ val!=null ? val['now']==true ? 'dark-green' : val['pre']==true ? 'dark-yellow' : 'dark-orange' : 'default'}}"
+                         style="width: 230px; height: 100px;">
+                    <!-- style="border: 2px solid #999999; background-color: #ddd;  -->
+
+
+                    <div ng-repeat="(key, value) in val" style="font-size:small; margin: 1px;">
+                        {{ key=='bundle' ? value[0].number : key!='time' && key!='pre' && key!='min' && key!='now' ? value : ""}}
+                    </div>
+                </md-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endverbatim %}
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js'></script>
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js'></script>
+<script src='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.js'></script>
+
+<script src="{% static "js/index.js" %}"></script>
+
+</body>
+</html>

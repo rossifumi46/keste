@@ -6,7 +6,6 @@ from django.db.models import Q
 from datetime import datetime, timedelta
 
 
-
 def check(day, start, end):
     """
     Search rooms which are free between start and end.

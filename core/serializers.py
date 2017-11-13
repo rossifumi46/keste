@@ -5,39 +5,54 @@ from core.models import *
 class SubjectGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('id',)
 
 
 class TutorGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tutor
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('id',)
 
 
 class RoomGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('id',)
+
 
 class BlockGetSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Block
-        fields = '__all__'
+        fields = ('name',)
 
 class TableSerializer(serializers.ModelSerializer):
     subject = serializers.SerializerMethodField()
     tutor = serializers.SerializerMethodField()
-    room = serializers.SerializerMethodField()
+    block = serializers.SerializerMethodField()
+    bundle = serializers.SerializerMethodField()
 
     class Meta:
         model = Table
-        fields = '__all__'
+        exclude = ('bundle', 'created', 'id', 'day', 'start', 'end')
 
     def get_subject(self, model):
-        return SubjectGetSerializer(model.subject).data
+        # print(SubjectGetSerializer(model.subject).data)
+        return SubjectGetSerializer(model.subject).data['name']
 
     def get_tutor(self, model):
-        return TutorGetSerializer(model.tutor).data
+        return TutorGetSerializer(model.tutor).data['name']
 
-    def get_room(self, model):
-        return RoomGetSerializer(model.room).data
+    def get_block(self, model):
+        return BlockGetSerializer(model.block).data['name']
+
+    def get_bundle(self, model):
+        rooms=Room.objects.filter(bundle=model.bundle)
+        return RoomGetSerializer(rooms, many=True).data
+
+
+# class ScheduleSerializer(serializers.Serializer):
+#     def create(self, validated_data):

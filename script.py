@@ -10,21 +10,23 @@ import requests
 import json
 import pprint
 from core.models import *
-import datetime
+from datetime import datetime
+from collections import OrderedDict
 
 if __name__ == "__main__":
+    # url = "http://schedule.iitu.kz/rest/user/get_timetable_block.php"
     url = "http://schedule.iitu.kz/rest/user/get_timetable_room.php"
+    # for i in range(13765, 14246):
+    for i in range(0, 500):
 
-    for i in range(193, 194):
-
+        # querystring = {"block_id": str(i)}
         querystring = {"bundle_id": str(i)}
 
         response = requests.request("GET", url, params=querystring)
-        print(response.status_code)
-        a = response.text
-
-        a = json.loads(a)
-
+        # print(response.status_code)
+        e = response.text
+        a = json.loads(e)
+        # some = json.loads(e, object_pairs_hook=OrderedDict)
         bl = a['blocks']
         bd = a['bundles']
         s = a['subjects']
@@ -32,12 +34,20 @@ if __name__ == "__main__":
         t = a['teachers']
         if not b:
             continue
+        # print(i)
         # pp = pprint.PrettyPrinter(indent=4)
         # pp.pprint(a)
-
-        for key, value in bl.items():
-            # print(value['name'])
-            Block.objects.get_or_create(name=value['name'])
+        bls = sorted(bl)
+        # print(bl)
+        value = bl[bls[0]]
+        u = Block.objects.get_or_create(name=value['name'])[0]
+        # print(u.name)
+        # for item in bls:
+        #     # print(value['name'])
+        #     value = bl[item]
+        #     k = Block.objects.get_or_create(name=value['name'])[0]
+        #     u.my.add(k)
+        #     # print(value['name'])
 
         for key, value in s.items():
             # print(value['subject_en'])
@@ -71,11 +81,11 @@ if __name__ == "__main__":
 
                 time = c["time_id"]
                 start = a['times'][time]['start_time']
-                start = datetime.datetime.strptime(start, '%H:%M:%S').time()
+                start = datetime.strptime(start, '%H:%M:%S').time()
                 end = a['times'][time]['end_time']
-                end = datetime.datetime.strptime(end, '%H:%M:%S').time()
+                end = datetime.strptime(end, '%H:%M:%S').time()
                 day = int(key)
-                # print(day)
+                # print("day ", day)
 
                 id = c["teacher_id"]
                 tutor = a['teachers'][id]["teacher_en"]
@@ -87,13 +97,17 @@ if __name__ == "__main__":
 
                 block = c['block_id']
                 block = Block.objects.get(name=bl[block]['name'])
-
-                Table.objects.get_or_create(
+                # print(time)
+                time = Time.objects.get(pk=int(time))
+                # print(block.name)
+                some, created = Table.objects.update_or_create(
                     subject=subject,
                     start=start,
                     end=end,
                     block=block,
                     tutor=tutor,
                     bundle=bundle,
-                    day=day
+                    day=day,
+                    defaults={'time': time}
                 )
+                # print(created)
