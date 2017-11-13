@@ -1,8 +1,8 @@
-[31mDEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.[0m
 certifi (2017.7.27.1)
 chardet (3.0.4)
 dj-database-url (0.4.2)
 Django (1.11.5)
+django-cors-headers (2.1.0)
 django-filter (1.0.4)
 djangorestframework (3.6.4)
 gunicorn (19.7.1)
