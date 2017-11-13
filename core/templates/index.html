@@ -29,7 +29,7 @@
                 <md-item-template>
                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.name }}</span>
                     {{ item.now }}
-                    <span ng-style="{'color: green': item.now === 'Error', 'color: yellow': item.now === false"
+                    <span 
                           md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.info[0]}}</span>
                 </md-item-template>
         </form>
