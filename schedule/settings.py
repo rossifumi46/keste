@@ -25,7 +25,7 @@ SECRET_KEY = '81+i6^cfl^bp056t1&i&z(%g*ci!9%ge5t0_tx%=ftiaq1j&1!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['vr46.herokuapp.com', 'www.keste.me',]
+ALLOWED_HOSTS = ['vr46.herokuapp.com', 'www.keste.me', 'localhost']
 
 
 # Application definition
@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'django.contrib.postgres',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -131,3 +133,4 @@ STATIC_URL = '/static/'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+CORS_ORIGIN_ALLOW_ALL = True
