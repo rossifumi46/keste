@@ -124,7 +124,7 @@ class TutorView(APIView):
                         table[str(i)][str(item['time'])]["now"] = True
                         next = True
                     else:
-                        table[str(i)][str(item['time'])]["now"] = Fals
+                        table[str(i)][str(item['time'])]["now"] = False
                     if d == i and before and item['time'] == s:
                         table[str(i)][str(item['time'])]["pre"] = True
                         before = False
