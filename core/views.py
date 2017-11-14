@@ -87,6 +87,8 @@ class TutorView(APIView):
     def get_table(self, pk):
         try:
             tutor = Tutor.objects.get(pk=pk)
+            min = Table.objects.filter(tutor=tutor).aggregate(Min('time'))['time__min']
+            max = Table.objects.filter(tutor=tutor).aggregate(Max('time'))['time__max']
             table = {}
             t = datetime.now()
             d = t.weekday() + 1
@@ -96,9 +98,7 @@ class TutorView(APIView):
             # table[str(1)][str(item['time'])]["next"] = True
             next = False
             before = False
-            after =False
-            min = Table.objects.filter(tutor=tutor).aggregate(Min('time'))['time__min']
-            max = Table.objects.filter(tutor=tutor).aggregate(Max('time'))['time__max']
+            after = False
             for i in range(1, 6):
                 tables = Table.objects.filter(day=i, tutor=tutor).order_by('start')
                 if d == i:
@@ -108,34 +108,38 @@ class TutorView(APIView):
                         before = True
                     if t.time() > e:
                         after = True
+
                 serializer = TableSerializer(tables, many=True)
                 table[str(i)] = {}
-                for j in range(min, max+1):
+                for j in range(min, max + 1):
                     table[str(i)][str(j)] = None
+                e = Time.objects.get(pk=1).start
                 for item in serializer.data:
-                    if next:
-                        table[str(i)][str(item['time'])]["pre"] = True
-                        next = False
+
                     table[str(i)][str(item['time'])] = item
+
                     time = Time.objects.get(pk=int(item['time']))
-                    sl = time.start
-                    el = time.end
-                    if sl < t.time() < el and d == i:
-                        table[str(i)][str(item['time'])]["now"] = True
-                        next = True
-                    else:
-                        table[str(i)][str(item['time'])]["now"] = False
-                    if d == i and before and item['time'] == s:
+                    s = time.start
+
+                    if d == i and before and item['time'] == time.pk:
                         table[str(i)][str(item['time'])]["pre"] = True
                         before = False
                     else:
                         table[str(i)][str(item['time'])]["pre"] = False
-                    if d+1 == i and after:
-                        table[str(i+1)][str(item['time'])]["pre"] = True
-                        after = False
+                    if d == i and e < t.time() < s:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                    e = time.end
+                    if next:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                        next = False
+                    if s < t.time() < e and d == i:
+                        table[str(i)][str(item['time'])]["now"] = True
+                        next = True
                     else:
-                        table[str(i)][str(item['time'])]["pre"] = False
-                next = False
+                        table[str(i)][str(item['time'])]["now"] = False
+                    if d + 1 == i and after:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                        after = False
 
             return table
         except Group.DoesNotExist:
@@ -150,68 +154,59 @@ class RoomView(APIView):
     def get_table(self, pk):
         try:
             room = Room.objects.get(pk=pk)
-            table = {}
-            d = datetime.now().weekday() + 1
-            first = False
-            if d > 5:
-                d = 1
-                first = True
-            # table[str(1)][str(item['time'])]["next"] = True
-            next = False
-            after = False
             min = Table.objects.filter(bundle__room=room).aggregate(Min('time'))['time__min']
             max = Table.objects.filter(bundle__room=room).aggregate(Max('time'))['time__max']
+            table = {}
+            t = datetime.now()
+            d = t.weekday() + 1
+            # if d > 5:
+            #     d = 1
+            #     first = True
+            # table[str(1)][str(item['time'])]["next"] = True
+            next = False
+            before = False
+            after = False
             for i in range(1, 6):
                 tables = Table.objects.filter(day=i, bundle__room=room).order_by('start')
-                l = 0
                 if d == i:
-                    s = tables.aggregate(Min('time'))['time__min']
-                    if not first:
-                        e = tables.aggregate(Max('time'))['time__max']
-                        sh = Time.objects.get(pk=s)
-                        eh = Time.objects.get(pk=e)
-                        l = 0
-                        if next:
-                            l = s
-                        else:
-                            if datetime.now().time() < sh.start:
-                                l = s
-                            else:
-                                if datetime.now().time() > eh.start:
-                                    d = d + 1
-                                    next = True
-                                else:
-                                    after = True
+                    s = tables.aggregate(Min('start'))['start__min']
+                    e = tables.aggregate(Max('end'))['end__max']
+                    if t.time() < s:
+                        before = True
+                    if t.time() > e:
+                        after = True
 
                 serializer = TableSerializer(tables, many=True)
-                # table[str(i)] = serializer.data
-                table[str(i)] = {};
-                for j in range(min, max+1):
+                table[str(i)] = {}
+                for j in range(min, max + 1):
                     table[str(i)][str(j)] = None
-                af = False
+                e = Time.objects.get(pk=1).start
                 for item in serializer.data:
+
                     table[str(i)][str(item['time'])] = item
-                    t = False
-                    t1 = False
-                    if d == i and l == item['time']:
-                        t1 = True
-                    if first:
-                        t1 = True
-                        first = False
-                    table[str(i)][str(item['time'])]["pre"] = t1
+
                     time = Time.objects.get(pk=int(item['time']))
                     s = time.start
-                    e = time.end
-                    if af and table[str(i)][str(item['time'])] != None:
-                        table[str(i)][str(item['time'])]["pre"] = True
-                        af = False
-                    if s < datetime.now().time() < e and i == datetime.now().weekday() + 1 and not next:
-                        t =True
-                        if after:
-                            af = True
-                            after = False
-                    table[str(i)][str(item['time'])]["now"] = t
 
+                    if d == i and before and item['time'] == time.pk:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                        before = False
+                    else:
+                        table[str(i)][str(item['time'])]["pre"] = False
+                    if d == i and e < t.time() < s:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                    e = time.end
+                    if next:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                        next = False
+                    if s < t.time() < e and d == i:
+                        table[str(i)][str(item['time'])]["now"] = True
+                        next = True
+                    else:
+                        table[str(i)][str(item['time'])]["now"] = False
+                    if d + 1 == i and after:
+                        table[str(i)][str(item['time'])]["pre"] = True
+                        after = False
 
             return table
         except Group.DoesNotExist:
