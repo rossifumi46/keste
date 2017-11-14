@@ -25,13 +25,17 @@
                     md-selected-item="ctrl.choice.a"
                     md-search-text="searchText"
                     md-items="item in ctrl.querySearch(searchText)"
-                    md-item-text="item.name">
+                    md-item-text="item.name"
+                    placeholder="Type Group, Room, Tutor"
+                    
+                    >
                 <md-item-template>
                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.name }}</span>
                     {{ item.now }}
-                    <span 
+                    <span
                           md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.info[0]}}</span>
                 </md-item-template>
+                
         </form>
     </md-content>
     <div style="width: 250px; float: left;" ng-repeat="(key, value) in ctrl.model.items">
