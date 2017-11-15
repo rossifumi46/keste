@@ -97,7 +97,7 @@
       return arr;
     }
     function querySearch (query) {
-    return $http.get('http://localhost:8000/search/?query=' + query).then(function(response) {
+    return $http.get('/search/?query=' + query).then(function(response) {
             return response.data;
            });
     }
@@ -105,7 +105,7 @@
     $scope.submit = function() {
       var query=self.choice.a.id;
 
-      $http.get('http://localhost:8000/' + self.choice.a.type + '/' + query).then(function(response) {
+      $http.get('/' + self.choice.a.type + '/' + query).then(function(response) {
           
           self.model.items=response.data;
            });
