@@ -97,18 +97,23 @@
       return arr;
     }
     function querySearch (query) {
-    return $http.get('/search/?query=' + query).then(function(response) {
+    return $http.get('http://localhost:8000/search/?query=' + query).then(function(response) {
             return response.data;
            });
     }
 
     $scope.submit = function() {
       var query=self.choice.a.id;
-      $log.info(self.choice.a.type);
-      $http.get('/' + self.choice.a.type + '/' + query).then(function(response) {
+
+      $http.get('http://localhost:8000/' + self.choice.a.type + '/' + query).then(function(response) {
           
           self.model.items=response.data;
            });
+    }
+    $scope.day = function() {
+      var d = new Date();
+      var n = d.getDay();
+      return n;
     }
   
   }

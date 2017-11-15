@@ -38,27 +38,28 @@
                 
         </form>
     </md-content>
-    <div style="width: 250px; float: left;" ng-repeat="(key, value) in ctrl.model.items">
-        {{ ctrl.model.days[(key|num)-1]}}
-        <div style="" ng-repeat="(k, val) in value">
-            <div layout="row">
-                <br>
-                {{ key=='1' ? ctrl.model.times[k]["start_time"]: ""}}
-                <br>
-                {{ key=='1' ? ctrl.model.times[k]["end_time"]: ""}}
-                <!-- <div style="float: left;"> -->
-                <md-card md-theme="
-                        {{ val!=null ? val['now']==true ? 'dark-green' : val['pre']==true ? 'dark-yellow' : 'dark-orange' : 'default'}}"
-                         style="width: 230px; height: 100px;">
-                    <!-- style="border: 2px solid #999999; background-color: #ddd;  -->
-
-
-                    <div ng-repeat="(key, value) in val" style="font-size:small; margin: 1px;">
-                        {{ key=='bundle' ? value[0].number : key!='time' && key!='pre' && key!='min' && key!='now' ? value : ""}}
-                    </div>
-                </md-card>
+    <div
+    style="width: 250px; float: left;" ng-repeat="(key, value) in ctrl.model.items">
+        <md-card
+        md-theme="{{ day()==key ? 'dark-green' : 'default' }}"
+        >
+            {{ ctrl.model.days[(key|num)-1]}}
+            <div ng-repeat="(k, val) in value">
+                <div layout="row">
+                    <br>
+                    {{ key=='1' ? ctrl.model.times[k]["start_time"]: ""}}
+                    <br>
+                    {{ key=='1' ? ctrl.model.times[k]["end_time"]: ""}}
+                    <md-card md-theme="
+                            {{ val!=null ? val['now']==true ? 'dark-green' : val['pre']==true ? 'dark-yellow' : 'dark-orange' : 'default'}}"
+                             style="width: 230px; height: 100px;">
+                            <div ng-repeat="(key, value) in val" style="font-size:small; margin: 1px;">
+                                {{ key=='bundle' ? value[0].number : key!='time' && key!='pre' && key!='min' && key!='now' ? value : ""}}
+                            </div>
+                    </md-card>
+                </div>
             </div>
-        </div>
+        </md-card>
     </div>
 </div>
 
