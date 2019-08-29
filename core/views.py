@@ -24,6 +24,8 @@ class BlockView(APIView):
             max = Table.objects.filter(block__in=my).aggregate(Max('time'))['time__max']
             table = {}
             t = datetime.now()
+            week = datetime(2017, 9, 1).isocalendar()[1]
+            table['week'] = t.isocalendar()[1] - week + 1
             d = t.weekday() + 1
             # if d > 5:
             #     d = 1

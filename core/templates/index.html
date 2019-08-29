@@ -27,17 +27,18 @@
                     md-items="item in ctrl.querySearch(searchText)"
                     md-item-text="item.name"
                     placeholder="Type Group, Room, Tutor"
-                    
-                    >
+            >
                 <md-item-template>
                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.name }}</span>
                     {{ item.now }}
                     <span
                           md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{ item.info[0]}}</span>
                 </md-item-template>
-                
+            </md-autocomplete>
         </form>
+        
     </md-content>
+    {{ctrl.model.items['week']}}
     <div
     style="width: 250px; float: left;" ng-repeat="(key, value) in ctrl.model.items">
         <md-card
